@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Will You Be My Valentine?</title>
 
   <style>
@@ -27,14 +27,16 @@
       width: 100%;
       max-width: 380px;
       background: rgba(255, 255, 255, 0.18);
-      padding: 30px 20px;
+      padding: 25px 20px;
       border-radius: 22px;
       backdrop-filter: blur(10px);
+      max-height: 90vh;
+      overflow-y: auto;
     }
 
     h1 {
       font-size: 1.8rem;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .name {
@@ -66,6 +68,7 @@
       flex-direction: column;
       gap: 15px;
       align-items: center;
+      margin-top: 10px;
     }
 
     button {
@@ -86,51 +89,69 @@
     #no {
       background: white;
       color: #ff4d6d;
-      position: absolute;
+      position: relative;
     }
   </style>
 </head>
 
 <body>
-
   <div class="card">
-    <h1>Will you be my Valentine, <span class="name">Beba</span>? 💖</h1>
+    <h1>
+      Will you be my Valentine,
+      <span class="name">Beba</span>? 💖
+    </h1>
 
-    <p>You make my every day better. So… what do you say? 🌹</p>
+    <p>
+      You make my every day better.  
+      So… what do you say? 🌹
+    </p>
 
-  <div class="photos">
-  <img src="pic1.jpg" alt="Us">
-  <img src="pic2.jpg" alt="Us">
-  <img src="pic3.jpg" alt="Us">
-  <img src="pic4.jpg" alt="Us">
-  <img src="pic5.jpg" alt="Us">
-  <img src="pic6.jpg" alt="Us">
-</div>
+    <div class="photos">
+      <img src="pic1.jpg" alt="Us">
+      <img src="pic2.jpg" alt="Us">
+      <img src="pic3.jpg" alt="Us">
+      <img src="pic4.jpg" alt="Us">
+      <img src="pic5.jpg" alt="Us">
+      <img src="pic6.jpg" alt="Us">
+    </div>
 
+    <div class="buttons">
+      <button id="yes" onclick="yesClicked()">YES 💕</button>
+      <button id="no">NO 🙄</button>
+    </div>
   </div>
 
   <script>
     const noBtn = document.getElementById("no");
 
     noBtn.addEventListener("mouseover", () => {
-      const x = Math.random() * (window.innerWidth - 120);
-      const y = Math.random() * (window.innerHeight - 60);
-      noBtn.style.left = x + "px";
-      noBtn.style.top = y + "px";
+      const x = Math.random() * 140 - 70;
+      const y = Math.random() * 80 - 40;
+      noBtn.style.transform = `translate(${x}px, ${y}px)`;
     });
 
     function yesClicked() {
       document.body.innerHTML = `
-        <div style="text-align:center; color:white;">
-          <h1>YAYYYY 💘</h1>
-          <p style="font-size:1.4rem;">
-            Officially my Valentine 💕<br>
-            I love you endlessly ❤️
-          </p>
+        <div style="
+          min-height:100vh;
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          text-align:center;
+          color:white;
+          font-family:Poppins,sans-serif;
+          padding:20px;
+        ">
+          <div>
+            <h1 style="font-size:2.2rem;">YAYYYY 💘</h1>
+            <p style="font-size:1.4rem;">
+              Officially my Valentine 💕<br>
+              I love you endlessly ❤️
+            </p>
+          </div>
         </div>
       `;
     }
   </script>
-
 </body>
 </html>
