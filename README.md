@@ -3,7 +3,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Will You Be My Valentine?</title>
+<h1>Will you be my Valentine, <span class="name">Beba</span>? 💖</h1>
+  
 <style>
   body {
     margin: 0;
@@ -48,11 +49,17 @@
     color: white;
   }
 
-  #no {
-    background: white;
-    color: #ff4d6d;
-    position: absolute;
-  }
+#no {
+  background: white;
+  color: #ff4d6d;
+  position: absolute;
+}
+
+.name {
+  color: #fff;
+  font-weight: 600;
+}
+
 </style>
 </head>
 <body>
