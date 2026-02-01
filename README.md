@@ -98,16 +98,15 @@
 
     <p>You make my every day better. So… what do you say? 🌹</p>
 
-    <div class="photos">
-      <img src="pic1.jpg" alt="Us">
-      <img src="pic2.jpg" alt="Us">
-      <img src="pic3.jpg" alt="Us">
-    </div>
+  <div class="photos">
+  <img src="pic1.jpg" alt="Us">
+  <img src="pic2.jpg" alt="Us">
+  <img src="pic3.jpg" alt="Us">
+  <img src="pic4.jpg" alt="Us">
+  <img src="pic5.jpg" alt="Us">
+  <img src="pic6.jpg" alt="Us">
+</div>
 
-    <div class="buttons">
-      <button id="yes" onclick="yesClicked()">YES 💕</button>
-      <button id="no">NO 🙄</button>
-    </div>
   </div>
 
   <script>
