@@ -1,98 +1,137 @@
-# index.html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<h1>Will you be my Valentine, <span class="name">Beba</span>? 💖</h1>
-  
-<style>
-  body {
-    margin: 0;
-    height: 100vh;
-    background: linear-gradient(135deg, #ff758c, #ff7eb3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Poppins', sans-serif;
-    color: white;
-    text-align: center;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Will You Be My Valentine?</title>
 
-  .card {
-    background: rgba(255,255,255,0.15);
-    padding: 40px;
-    border-radius: 20px;
-    backdrop-filter: blur(10px);
-  }
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-  h1 {
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-  }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #ff758c, #ff7eb3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Poppins', sans-serif;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
 
-  p {
-    font-size: 1.2rem;
-    margin-bottom: 30px;
-  }
+    .card {
+      width: 100%;
+      max-width: 380px;
+      background: rgba(255, 255, 255, 0.18);
+      padding: 30px 20px;
+      border-radius: 22px;
+      backdrop-filter: blur(10px);
+    }
 
-  button {
-    padding: 12px 25px;
-    font-size: 1.1rem;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    margin: 10px;
-  }
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 12px;
+    }
 
-  #yes {
-    background: #ff4d6d;
-    color: white;
-  }
+    .name {
+      font-weight: 600;
+    }
 
-#no {
-  background: white;
-  color: #ff4d6d;
-  position: absolute;
-}
+    p {
+      font-size: 1rem;
+      margin-bottom: 20px;
+      line-height: 1.4;
+    }
 
-.name {
-  color: #fff;
-  font-weight: 600;
-}
+    .photos {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      margin-bottom: 25px;
+    }
 
-</style>
+    .photos img {
+      height: 160px;
+      border-radius: 16px;
+      flex-shrink: 0;
+    }
+
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      align-items: center;
+    }
+
+    button {
+      width: 100%;
+      max-width: 220px;
+      padding: 14px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+
+    #yes {
+      background: #ff4d6d;
+      color: white;
+    }
+
+    #no {
+      background: white;
+      color: #ff4d6d;
+      position: absolute;
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="card">
-  <h1>Will you be my Valentine? 💖</h1>
-  <p>You make my every day better. So… what do you say? 🌹</p>
-  <button id="yes" onclick="yesClicked()">YES 💕</button>
-  <button id="no">NO 🙄</button>
-</div>
+  <div class="card">
+    <h1>Will you be my Valentine, <span class="name">Beba</span>? 💖</h1>
 
-<script>
-  const noBtn = document.getElementById("no");
+    <p>You make my every day better. So… what do you say? 🌹</p>
 
-  noBtn.addEventListener("mouseover", () => {
-    const x = Math.random() * (window.innerWidth - 100);
-    const y = Math.random() * (window.innerHeight - 50);
-    noBtn.style.left = x + "px";
-    noBtn.style.top = y + "px";
-  });
+    <div class="photos">
+      <img src="pic1.jpg" alt="Us">
+      <img src="pic2.jpg" alt="Us">
+      <img src="pic3.jpg" alt="Us">
+    </div>
 
-  function yesClicked() {
-    document.body.innerHTML = `
-      <div style="text-align:center; color:white;">
-        <h1>YAYYYY 💘</h1>
-        <p style="font-size:1.5rem;">
-          Best decision ever 🥰<br>
-          I can’t wait to celebrate love with you ❤️
-        </p>
-      </div>
-    `;
-  }
-</script>
+    <div class="buttons">
+      <button id="yes" onclick="yesClicked()">YES 💕</button>
+      <button id="no">NO 🙄</button>
+    </div>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById("no");
+
+    noBtn.addEventListener("mouseover", () => {
+      const x = Math.random() * (window.innerWidth - 120);
+      const y = Math.random() * (window.innerHeight - 60);
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+    });
+
+    function yesClicked() {
+      document.body.innerHTML = `
+        <div style="text-align:center; color:white;">
+          <h1>YAYYYY 💘</h1>
+          <p style="font-size:1.4rem;">
+            Officially my Valentine 💕<br>
+            I love you endlessly ❤️
+          </p>
+        </div>
+      `;
+    }
+  </script>
 
 </body>
 </html>
