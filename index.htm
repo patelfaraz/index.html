@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Will You Be My Valentine?</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #ff758c, #ff7eb3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Poppins', sans-serif;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 380px;
+      background: rgba(255, 255, 255, 0.18);
+      padding: 25px 20px;
+      border-radius: 22px;
+      backdrop-filter: blur(10px);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
+
+    .name {
+      font-weight: 600;
+    }
+
+    p {
+      font-size: 1rem;
+      margin-bottom: 20px;
+      line-height: 1.4;
+    }
+
+    .photos {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      margin-bottom: 25px;
+    }
+
+    .photos img {
+      height: 160px;
+      border-radius: 16px;
+      flex-shrink: 0;
+    }
+
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+button {
+      width: 100%;
+      max-width: 220px;
+      padding: 14px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+
+    #yes {
+      background: #ff4d6d;
+      color: white;
+    }
+
+    #no {
+      background: white;
+      color: #ff4d6d;
+      position: relative;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+    <h1>
+      Will you be my Valentine,
+      <span class="name">Beba</span>? 💖
+    </h1>
+
+    <p>
+      You make my every day better.<br>
+      So… what do you say? 🌹
+    </p>
+
+    <div class="photos">
+      <img src="pic1.jpg" alt="Us">
+      <img src="pic2.jpg" alt="Us">
+      <img src="pic3.jpg" alt="Us">
+      <img src="pic4.jpg" alt="Us">
+      <img src="pic5.jpg" alt="Us">
+    </div>
+
+    <div class="buttons">
+      <button id="yes" onclick="yesClicked()">YES 💕</button>
+      <button id="no">NO 🙄</button>
+    </div>
+
+  <script>
+    const noBtn = document.getElementById("no");
+
+    noBtn.addEventListener("mouseover", () => {
+      const x = Math.random() * 140 - 70;
+      const y = Math.random() * 80 - 40;
+      noBtn.style.transform = `translate(${x}px, ${y}px)`;
+    });
+
+    function yesClicked() {
+      document.body.innerHTML = `
+        <div style="
+          min-height:100vh;
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          text-align:center;
+          color:white;
+          font-family:Poppins,sans-serif;
+          padding:20px;
+        ">
+          <div>
+            <h1 style="font-size:2.2rem;">YAYYYY 💘</h1>
+            <p style="font-size:1.4rem;">
+              Officially my Valentine 💕<br>
+              I love you endlessly ❤️
+            </p>
+          </div>
+        </div>
+      `;
+    }
+  </script>
+
+</body>
+</html>
