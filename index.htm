@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Will You Be My Valentine?</title>
 
   <style>
@@ -21,22 +21,22 @@
       color: white;
       text-align: center;
       padding: 20px;
+      overflow: hidden;
     }
 
     .card {
-  width: 100%;
-  max-width: 380px;
-  background: rgba(255, 255, 255, 0.18);
-  padding: 25px 20px;
-  border-radius: 22px;
-  backdrop-filter: blur(10px);
-  max-height: 90vh;
-  overflow-y: auto;
-
-  position: relative;
-  z-index: 10001;
+      width: 100%;
+      max-width: 380px;
+      background: rgba(255, 255, 255, 0.18);
+      padding: 25px 20px;
+      border-radius: 22px;
+      backdrop-filter: blur(10px);
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      z-index: 10001;
     }
-    
+
     h1 {
       font-size: 1.8rem;
       margin-bottom: 10px;
@@ -72,23 +72,11 @@
       gap: 15px;
       align-items: center;
       margin-top: 10px;
+      position: relative;
+      z-index: 10002;
     }
-.heart {
-  position: fixed;
-  bottom: -20px;
-  font-size: 20px;
-  animation: floatUp linear forwards;
-  pointer-events: none;
-  z-index: 9999;
-}
 
-button {
-  pointer-events: auto;
-  position: relative;
-  z-index: 10002;
-}
-    
-button {
+    button {
       width: 100%;
       max-width: 220px;
       padding: 14px;
@@ -96,6 +84,9 @@ button {
       border: none;
       border-radius: 999px;
       cursor: pointer;
+      pointer-events: auto;
+      position: relative;
+      z-index: 10003;
     }
 
     #yes {
@@ -106,41 +97,28 @@ button {
     #no {
       background: white;
       color: #ff4d6d;
-      position: relative;
     }
 
-      .heart {
-  position: fixed;
-  bottom: -20px;
-  font-size: 20px;
-  animation: floatUp linear forwards;
-  pointer-events: none;
-  z-index: 9999;
-}
+    /* Floating hearts */
+    .heart {
+      position: fixed;
+      bottom: -20px;
+      font-size: 20px;
+      animation: floatUp linear forwards;
+      pointer-events: none;
+      z-index: 9999;
+    }
 
-@keyframes floatUp {
-  from {
-    transform: translateY(0) scale(1);
-    opacity: 1;
-  }
-  to {
-    transform: translateY(-100vh) scale(1.6);
-    opacity: 0;
-  }
-}
-
-
-@keyframes floatUp {
-  from {
-    transform: translateY(0) scale(1);
-    opacity: 1;
-  }
-  to {
-    transform: translateY(-100vh) scale(1.6);
-    opacity: 0;
-  }
-}
-    
+    @keyframes floatUp {
+      from {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-100vh) scale(1.6);
+        opacity: 0;
+      }
+    }
   </style>
 </head>
 
@@ -153,7 +131,7 @@ button {
     </h1>
 
     <p>
-      You make my every day better.<br>
+      You make my every day better.<br />
       So… what do you say? 🌹
     </p>
 
@@ -163,30 +141,36 @@ button {
       <img src="pic3.jpg" alt="Us">
       <img src="pic4.jpg" alt="Us">
       <img src="pic5.jpg" alt="Us">
+      <img src="pic6.jpg" alt="Us">
     </div>
 
     <div class="buttons">
-      <button id="yes" onclick="yesClicked()">YES 💕</button>
+      <button id="yes">YES 💕</button>
       <button id="no">NO 🙄</button>
     </div>
+  </div>
 
   <script>
+    const noBtn = document.getElementById("no");
+    const yesBtn = document.getElementById("yes");
+
     function moveNoButton() {
-  const x = Math.random() * 140 - 70;
-  const y = Math.random() * 80 - 40;
-  noBtn.style.transform = `translate(${x}px, ${y}px)`;
-}
+      const x = Math.random() * 140 - 70;
+      const y = Math.random() * 80 - 40;
+      noBtn.style.transform = `translate(${x}px, ${y}px)`;
+    }
 
-// Desktop
-noBtn.addEventListener("mouseover", moveNoButton);
+    // Desktop
+    noBtn.addEventListener("mouseover", moveNoButton);
 
-// Mobile
-noBtn.addEventListener("touchstart", (e) => {
-  e.preventDefault();
-  moveNoButton();
-});
-    document.getElementById("yes").addEventListener("click", yesClicked);
-    
+    // Mobile
+    noBtn.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      moveNoButton();
+    });
+
+    yesBtn.addEventListener("click", yesClicked);
+
     function yesClicked() {
       document.body.innerHTML = `
         <div style="
@@ -209,44 +193,18 @@ noBtn.addEventListener("touchstart", (e) => {
         </div>
       `;
     }
-<script>
-  function createHeart() {
-    const heart = document.createElement("div");
-    heart.className = "heart";
-    heart.innerText = "💖";
 
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.animationDuration = (Math.random() * 2 + 3) + "s";
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerText = "💖";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (Math.random() * 2 + 4) + "s";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 6000);
+    }
 
-    document.body.appendChild(heart);
-
-    setTimeout(() => {
-      heart.remove();
-    }, 5000);
-  }
-
-  setInterval(createHeart, 500);
-</script>
-    
-    <script>
-  function createHeart() {
-    const heart = document.createElement("div");
-    heart.className = "heart";
-    heart.innerText = "💖";
-
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.animationDuration = (Math.random() * 2 + 3) + "s";
-
-    document.body.appendChild(heart);
-
-    setTimeout(() => {
-      heart.remove();
-    }, 5000);
-  }
-
-  setInterval(createHeart, 500);
-    </script>
-    
+    setInterval(createHeart, 800);
   </script>
 
 </body>
