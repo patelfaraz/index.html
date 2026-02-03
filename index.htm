@@ -171,14 +171,22 @@ button {
     </div>
 
   <script>
-    const noBtn = document.getElementById("no");
+    function moveNoButton() {
+  const x = Math.random() * 140 - 70;
+  const y = Math.random() * 80 - 40;
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+}
 
-    noBtn.addEventListener("mouseover", () => {
-      const x = Math.random() * 140 - 70;
-      const y = Math.random() * 80 - 40;
-      noBtn.style.transform = `translate(${x}px, ${y}px)`;
-    });
+// Desktop
+noBtn.addEventListener("mouseover", moveNoButton);
 
+// Mobile
+noBtn.addEventListener("touchstart", (e) => {
+  e.preventDefault();
+  moveNoButton();
+});
+    document.getElementById("yes").addEventListener("click", yesClicked);
+    
     function yesClicked() {
       document.body.innerHTML = `
         <div style="
