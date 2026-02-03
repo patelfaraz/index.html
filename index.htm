@@ -40,6 +40,7 @@
     h1 {
       font-size: 1.8rem;
       margin-bottom: 10px;
+      cursor: pointer;
     }
 
     .name {
@@ -64,6 +65,7 @@
       height: 160px;
       border-radius: 16px;
       flex-shrink: 0;
+      user-select: none;
     }
 
     .buttons {
@@ -84,7 +86,6 @@
       border: none;
       border-radius: 999px;
       cursor: pointer;
-      pointer-events: auto;
       position: relative;
       z-index: 10003;
     }
@@ -119,13 +120,39 @@
         opacity: 0;
       }
     }
+
+    /* Easter egg popup */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.75);
+      color: white;
+      padding: 12px 18px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      z-index: 10005;
+      animation: fadeUp 0.4s ease;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translate(-50%, 10px);
+      }
+      to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
+    }
   </style>
 </head>
 
 <body>
 
   <div class="card">
-    <h1>
+    <h1 id="title">
       Will you be my Valentine,
       <span class="name">Beba</span>? 💖
     </h1>
@@ -153,47 +180,54 @@
   <script>
     const noBtn = document.getElementById("no");
     const yesBtn = document.getElementById("yes");
+    const title = document.getElementById("title");
+    const photos = document.querySelectorAll(".photos img");
 
+    /* NO button dodge */
     function moveNoButton() {
       const x = Math.random() * 140 - 70;
       const y = Math.random() * 80 - 40;
       noBtn.style.transform = `translate(${x}px, ${y}px)`;
     }
 
-    // Desktop
     noBtn.addEventListener("mouseover", moveNoButton);
-
-    // Mobile
     noBtn.addEventListener("touchstart", (e) => {
       e.preventDefault();
       moveNoButton();
     });
 
-    yesBtn.addEventListener("click", yesClicked);
+    /* YES button */
+    let yesClicks = 0;
+    yesBtn.addEventListener("click", () => {
+      yesClicks++;
 
-    function yesClicked() {
-      document.body.innerHTML = `
-        <div style="
-          min-height:100vh;
-          display:flex;
-          align-items:center;
-          justify-content:center;
-          text-align:center;
-          color:white;
-          font-family:Poppins,sans-serif;
-          padding:20px;
-        ">
-          <div>
-            <h1 style="font-size:2.2rem;">YAYYYY 💘</h1>
-            <p style="font-size:1.4rem;">
-              Officially my Valentine 💕<br>
-              I love you endlessly ❤️
-            </p>
+      if (yesClicks === 1) {
+        document.body.innerHTML = `
+          <div style="
+            min-height:100vh;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            text-align:center;
+            color:white;
+            font-family:Poppins,sans-serif;
+            padding:20px;
+          ">
+            <div>
+              <h1 style="font-size:2.2rem;">YAYYYY 💘</h1>
+              <p style="font-size:1.4rem;">
+                Officially my Valentine 💕<br>
+                I love you endlessly ❤️
+              </p>
+            </div>
           </div>
-        </div>
-      `;
-    }
+        `;
+      } else {
+        showPopup("PS: I was never giving you a NO option anyway 😌");
+      }
+    });
 
+    /* Floating hearts */
     function createHeart() {
       const heart = document.createElement("div");
       heart.className = "heart";
@@ -203,8 +237,39 @@
       document.body.appendChild(heart);
       setTimeout(() => heart.remove(), 6000);
     }
-
     setInterval(createHeart, 800);
+
+    /* Easter egg: title tap */
+    let heartTaps = 0;
+    title.addEventListener("click", () => {
+      heartTaps++;
+      if (heartTaps === 5) {
+        showPopup("You found my secret. I choose you every single time ❤️");
+        heartTaps = 0;
+      }
+    });
+
+    /* Easter egg: long press on photos */
+    photos.forEach(photo => {
+      let pressTimer;
+      photo.addEventListener("touchstart", () => {
+        pressTimer = setTimeout(() => {
+          showPopup("One of my favourite memories 🥹❤️");
+        }, 800);
+      });
+      photo.addEventListener("touchend", () => {
+        clearTimeout(pressTimer);
+      });
+    });
+
+    /* Popup helper */
+    function showPopup(text) {
+      const popup = document.createElement("div");
+      popup.className = "popup";
+      popup.innerText = text;
+      document.body.appendChild(popup);
+      setTimeout(() => popup.remove(), 2500);
+    }
   </script>
 
 </body>
