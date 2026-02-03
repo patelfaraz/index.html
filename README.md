@@ -113,7 +113,6 @@
       <img src="pic3.jpg" alt="Us">
       <img src="pic4.jpg" alt="Us">
       <img src="pic5.jpg" alt="Us">
-      <img src="pic6.jpg" alt="Us">
     </div>
 
     <div class="buttons">
