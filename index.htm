@@ -70,7 +70,20 @@
       align-items: center;
       margin-top: 10px;
     }
+.heart {
+  position: fixed;
+  bottom: -20px;
+  font-size: 20px;
+  animation: floatUp linear forwards;
+  pointer-events: none;
+  z-index: 9999;
+}
 
+.buttons {
+  position: relative;
+  z-index: 10000;
+}
+    
 button {
       width: 100%;
       max-width: 220px;
@@ -111,14 +124,7 @@ button {
     opacity: 0;
   }
 }
-.heart {
-  position: fixed;
-  bottom: -20px;
-  font-size: 20px;
-  animation: floatUp linear forwards;
-  pointer-events: none;
-  z-index: 9999;
-}
+
 
 @keyframes floatUp {
   from {
