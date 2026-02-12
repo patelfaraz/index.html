@@ -1,251 +1,246 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For You ❤️</title>
 
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family: 'Poppins', sans-serif;
-}
-
 body{
-  min-height:100vh;
-  background:linear-gradient(135deg,#6d4c41,#8d6e63);
-  text-align:center;
-  color:white;
-  overflow-x:hidden;
-  padding:20px;
-  position:relative;
+margin:0;
+font-family:'Poppins',sans-serif;
+text-align:center;
+background:linear-gradient(135deg,#7b4f44,#8c5c52);
+color:white;
+overflow-x:hidden;
 }
 
 h1{
-  margin-bottom:30px;
-  font-size:2rem;
+margin-top:30px;
+font-size:2rem;
 }
 
-.balloons{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:25px;
-  max-width:500px;
-  margin:0 auto 40px auto;
+.balloon-container{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:40px;
+margin:40px 0;
 }
 
 .balloon{
-  background:radial-gradient(circle at 30% 30%, #ff4d6d, #c9184a);
-  height:140px;
-  border-radius:50%;
-  position:relative;
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:28px;
-  font-weight:bold;
-  transition:0.3s;
+width:100px;
+height:130px;
+background:radial-gradient(circle at 30% 30%,#ff5c7a,#e60039);
+border-radius:50%;
+position:relative;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+font-weight:bold;
 }
 
 .balloon::after{
-  content:"";
-  position:absolute;
-  bottom:-40px;
-  width:3px;
-  height:40px;
-  background:white;
+content:"";
+position:absolute;
+bottom:-40px;
+left:50%;
+width:4px;
+height:40px;
+background:white;
+transform:translateX(-50%);
 }
 
-.balloon:hover{
-  transform:scale(1.05);
-}
-
-.photo-box{
-  display:none;
-  margin:20px auto;
-  max-width:350px;
-}
-
-.photo-box img{
-  width:100%;
-  border-radius:20px;
+.main-image{
+width:85%;
+max-width:400px;
+border-radius:25px;
+margin-top:20px;
+display:none;
 }
 
 .message{
-  margin-top:15px;
-  font-size:1.2rem;
-  color:#ffccd5;
-  font-weight:600;
+margin-top:15px;
+font-size:1.2rem;
+color:#ffccd5;
+display:none;
 }
 
-#finalQuestion{
-  display:none;
-  margin-top:30px;
-}
-
-.buttons{
-  margin-top:20px;
-  display:flex;
-  justify-content:center;
-  gap:20px;
-  position:relative;
+.final-section{
+display:none;
+margin-top:40px;
 }
 
 button{
-  padding:12px 25px;
-  border:none;
-  border-radius:30px;
-  font-size:1rem;
-  cursor:pointer;
+padding:12px 25px;
+border:none;
+border-radius:30px;
+font-size:1rem;
+cursor:pointer;
+margin:10px;
 }
 
 #yesBtn{
-  background:#ff4d6d;
-  color:white;
+background:#ff4d6d;
+color:white;
 }
 
 #noBtn{
-  background:#ddd;
+background:#ddd;
+}
+
+.dim{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:black;
+opacity:0;
+pointer-events:none;
+transition:2s;
+z-index:999;
 }
 
 .heart{
-  position:fixed;
-  top:-20px;
-  font-size:20px;
-  animation:fall linear forwards;
+position:fixed;
+top:-20px;
+font-size:20px;
+animation:fall 3s linear infinite;
+color:#ff4d6d;
 }
 
 @keyframes fall{
-  to{
-    transform:translateY(110vh);
-    opacity:0;
-  }
+to{
+transform:translateY(100vh);
+opacity:0;
 }
-
-/* Screen dim overlay */
-#dimOverlay{
-  position:fixed;
-  inset:0;
-  background:black;
-  opacity:0;
-  pointer-events:none;
-  transition:opacity 3s ease;
 }
 </style>
 </head>
 
 <body>
 
-<h1 id="mainTitle">Pop the Balloons 🎈</h1>
+<h1 id="title">Pop the Balloons 🎈</h1>
 
-<div class="balloons" id="balloons">
-  <div class="balloon" onclick="popBalloon(1,this)">1</div>
-  <div class="balloon" onclick="popBalloon(2,this)">2</div>
-  <div class="balloon" onclick="popBalloon(3,this)">3</div>
-  <div class="balloon" onclick="popBalloon(4,this)">4</div>
-  <div class="balloon" onclick="popBalloon(5,this)">5</div>
-  <div class="balloon" onclick="popBalloon(6,this)">6</div>
+<div class="balloon-container" id="balloons">
+<div class="balloon" onclick="popBalloon(1,this)">1</div>
+<div class="balloon" onclick="popBalloon(2,this)">2</div>
+<div class="balloon" onclick="popBalloon(3,this)">3</div>
+<div class="balloon" onclick="popBalloon(4,this)">4</div>
+<div class="balloon" onclick="popBalloon(5,this)">5</div>
+<div class="balloon" onclick="popBalloon(6,this)">6</div>
 </div>
 
-<div class="photo-box" id="photoBox">
-  <img id="photo" src="">
-  <div class="message" id="message"></div>
+<img id="mainImage" class="main-image">
+<div id="messageText" class="message"></div>
+
+<div class="final-section" id="finalSection">
+<h2>You're my forever person 🌹</h2>
+<h2>Will you be mine forever? ❤️</h2>
+<button id="yesBtn" onclick="yesClicked()">Yes 💖</button>
+<button id="noBtn" onmouseover="moveNo()">No 🙈</button>
 </div>
 
-<div id="finalQuestion">
-  <h2>Will you be mine forever? ❤️</h2>
-  <div class="buttons">
-    <button id="yesBtn">Yes 💖</button>
-    <button id="noBtn">No 🙈</button>
-  </div>
-</div>
+<div class="dim" id="dim"></div>
 
-<div id="dimOverlay"></div>
-
+<audio id="bgMusic" src="music.mp3" loop></audio>
 <audio id="popSound" src="pop.mp3"></audio>
-<audio id="bgMusic" src="music.mp3"></audio>
 
 <script>
-const messages = {
-1:"You make everyday worth living ❤️",
-2:"The way you look at me melts my heart 💕",
-3:"Every moment with you feels magical ✨",
-4:"You're my safe place 🫶",
-5:"Life feels complete with you 💖",
-6:"You're my forever person 🌹"
+
+let poppedCount=0;
+
+const images={
+1:"pic1.jpg",
+2:"pic2.jpg",
+3:"pic3.jpg",
+4:"pic4.jpg",
+5:"pic5.jpg",
+6:"pic6.jpg"
 };
 
-let poppedCount = 0;
+const messages={
+1:"You make everyday worth living ❤️",
+2:"Every moment with you feels magical ✨",
+3:"You are my safest place 💕",
+4:"Life feels better with you beside me 🌹",
+5:"You are my favorite hello and hardest goodbye 🥺",
+6:"The way you look at me, melts my heart ❤️"
+};
 
-function popBalloon(num, element){
-  document.getElementById("popSound").play();
-  element.style.display="none";
+function popBalloon(num,el){
 
-  document.getElementById("photo").src = "pic"+num+".jpg";
-  document.getElementById("message").innerText = messages[num];
-  document.getElementById("photoBox").style.display="block";
+document.getElementById("popSound").play();
 
-  poppedCount++;
+el.style.visibility="hidden";
+poppedCount++;
 
-  if(poppedCount===6){
-    document.getElementById("finalQuestion").style.display="block";
-  }
+let img=document.getElementById("mainImage");
+let msg=document.getElementById("messageText");
+
+img.src=images[num];
+img.style.display="block";
+
+msg.innerText=messages[num];
+msg.style.display="block";
+
+if(poppedCount===6){
+setTimeout(showFinal,1200);
+}
 }
 
-const yesBtn = document.getElementById("yesBtn");
-const noBtn = document.getElementById("noBtn");
-const bgMusic = document.getElementById("bgMusic");
+function showFinal(){
+document.getElementById("title").style.display="none";
+document.getElementById("balloons").style.display="none";
+document.getElementById("mainImage").style.display="none";
+document.getElementById("messageText").style.display="none";
+document.getElementById("finalSection").style.display="block";
+}
 
-noBtn.addEventListener("click",()=>{
-  noBtn.style.position="absolute";
-  noBtn.style.left=Math.random()*200+"px";
-  noBtn.style.top=Math.random()*100+"px";
-});
+function moveNo(){
+let btn=document.getElementById("noBtn");
+btn.style.position="absolute";
+btn.style.top=Math.random()*70+"vh";
+btn.style.left=Math.random()*70+"vw";
+}
 
-yesBtn.addEventListener("click",()=>{
+function yesClicked(){
+startHearts();
+fadeMusic();
+document.getElementById("dim").style.opacity="0.6";
+}
 
-  document.getElementById("balloons").style.display="none";
-  document.getElementById("mainTitle").style.display="none";
-  document.getElementById("finalQuestion").style.display="none";
-  document.getElementById("photoBox").style.display="none";
+function startHearts(){
+for(let i=0;i<30;i++){
+let heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="❤️";
+heart.style.left=Math.random()*100+"vw";
+heart.style.animationDuration=(2+Math.random()*3)+"s";
+document.body.appendChild(heart);
+}
+}
 
-  bgMusic.volume=0.5;
-  bgMusic.play();
+function fadeMusic(){
+let music=document.getElementById("bgMusic");
+let vol=1;
+let fade=setInterval(()=>{
+if(vol>0){
+vol-=0.05;
+music.volume=vol;
+}else{
+clearInterval(fade);
+}
+},200);
+}
 
-  // Heart shower
-  const heartInterval=setInterval(()=>{
-    const heart=document.createElement("div");
-    heart.classList.add("heart");
-    heart.innerHTML="💖";
-    heart.style.left=Math.random()*100+"vw";
-    heart.style.animationDuration=(Math.random()*2+3)+"s";
-    document.body.appendChild(heart);
-    setTimeout(()=>heart.remove(),5000);
-  },200);
+document.body.addEventListener("click",function(){
+document.getElementById("bgMusic").play();
+},{once:true});
 
-  setTimeout(()=>{
-    clearInterval(heartInterval);
-  },8000);
-
-  // Fade music
-  let fade=setInterval(()=>{
-    if(bgMusic.volume>0.05){
-      bgMusic.volume-=0.05;
-    }else{
-      bgMusic.pause();
-      clearInterval(fade);
-    }
-  },300);
-
-  // Slow cinematic dim
-  setTimeout(()=>{
-    document.getElementById("dimOverlay").style.opacity="0.85";
-  },4000);
-
-});
 </script>
 
 </body>
