@@ -11,26 +11,26 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  background: linear-gradient(135deg, #8e5a5a, #6b4b4b);
   font-family: 'Poppins', sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  overflow: hidden;
+  padding: 20px;
   text-align: center;
 }
 
 h1 {
   color: white;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
 }
 
 .balloon-container {
   display: flex;
-  gap: 25px;
+  gap: 20px;
   flex-wrap: wrap;
   justify-content: center;
+  margin-bottom: 25px;
 }
 
 .balloon {
@@ -64,45 +64,30 @@ h1 {
   font-size: 20px;
 }
 
-/* POPUP OVERLAY */
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-}
-
-.popup {
-  background: white;
-  padding: 20px;
-  border-radius: 20px;
-  max-width: 320px;
-  animation: scaleIn 0.3s ease forwards;
-}
-
-.popup img {
+/* Reveal section inline */
+.reveal-section {
   width: 100%;
-  border-radius: 15px;
-  margin-bottom: 15px;
+  max-width: 340px;
+  display: none;
+  margin-top: 10px;
 }
 
-.popup p {
+.reveal-section img {
+  width: 100%;
+  border-radius: 20px;
+}
+
+.reveal-section p {
   color: #ff4d6d;
-  font-weight: 500;
+  font-weight: 600;
+  margin-top: 15px;
+  font-size: 1rem;
 }
 
-@keyframes scaleIn {
-  from { transform: scale(0.8); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-
-/* QUESTION */
+/* Question */
 .question-box {
   display: none;
-  margin-top: 30px;
+  margin-top: 25px;
   color: white;
 }
 
@@ -111,8 +96,8 @@ h1 {
   padding: 12px 20px;
   border-radius: 30px;
   border: none;
-  cursor: pointer;
   font-size: 1rem;
+  cursor: pointer;
   position: relative;
 }
 
@@ -135,7 +120,7 @@ h1 {
 
 <audio id="popSound" src="pop.mp3"></audio>
 
-<div class="balloon-container" id="balloons">
+<div class="balloon-container">
   <div class="balloon" data-img="pic1.jpg" data-note="You make everyday worth living ❤️"><span>1</span></div>
   <div class="balloon" data-img="pic2.jpg" data-note="Every smile with you feels special 🥹"><span>2</span></div>
   <div class="balloon" data-img="pic3.jpg" data-note="Late night talks & endless laughter 🌙"><span>3</span></div>
@@ -144,12 +129,10 @@ h1 {
   <div class="balloon" data-img="pic6.jpg" data-note="And this is why I choose you. Always. 💍"><span>6</span></div>
 </div>
 
-<!-- POPUP -->
-<div class="overlay" id="overlay">
-  <div class="popup">
-    <img id="popupImg" src="">
-    <p id="popupNote"></p>
-  </div>
+<!-- Inline Reveal -->
+<div class="reveal-section" id="revealSection">
+  <img id="revealImg" src="">
+  <p id="revealText"></p>
 </div>
 
 <div class="question-box" id="questionBox">
@@ -160,9 +143,9 @@ h1 {
 
 <script>
 const balloons = document.querySelectorAll(".balloon");
-const overlay = document.getElementById("overlay");
-const popupImg = document.getElementById("popupImg");
-const popupNote = document.getElementById("popupNote");
+const revealSection = document.getElementById("revealSection");
+const revealImg = document.getElementById("revealImg");
+const revealText = document.getElementById("revealText");
 const questionBox = document.getElementById("questionBox");
 const popSound = document.getElementById("popSound");
 const noBtn = document.getElementById("noBtn");
@@ -179,32 +162,24 @@ balloons.forEach(balloon => {
     balloon.style.opacity = "0";
     setTimeout(() => balloon.remove(), 200);
 
-    popupImg.src = balloon.dataset.img;
-    popupNote.textContent = balloon.dataset.note;
-
-    overlay.style.display = "flex";
+    revealImg.src = balloon.dataset.img;
+    revealText.textContent = balloon.dataset.note;
+    revealSection.style.display = "block";
 
     remaining--;
 
     if (remaining === 0) {
-      setTimeout(() => {
-        questionBox.style.display = "block";
-      }, 500);
+      questionBox.style.display = "block";
     }
   });
 });
 
-/* Close popup on click */
-overlay.addEventListener("click", () => {
-  overlay.style.display = "none";
-});
-
-/* YES BUTTON FINAL RESPONSE */
+/* YES button */
 document.getElementById("yesBtn").addEventListener("click", () => {
   questionBox.innerHTML = "<h2>Forever starts now 💍❤️</h2>";
 });
 
-/* NO BUTTON RUNS AWAY */
+/* NO button runs away */
 noBtn.addEventListener("mouseenter", () => {
   const x = Math.random() * 250 - 125;
   const y = Math.random() * 150 - 75;
