@@ -1,276 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Will You Be My Valentine?</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pop the Balloons 💖</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<style>
+  * { box-sizing: border-box; }
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: linear-gradient(135deg, #ff758c, #ff7eb3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Poppins', sans-serif;
-      color: white;
-      text-align: center;
-      padding: 20px;
-      overflow: hidden;
-    }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    overflow: hidden;
+    text-align: center;
+  }
 
-    .card {
-      width: 100%;
-      max-width: 380px;
-      background: rgba(255, 255, 255, 0.18);
-      padding: 25px 20px;
-      border-radius: 22px;
-      backdrop-filter: blur(10px);
-      max-height: 90vh;
-      overflow-y: auto;
-      position: relative;
-      z-index: 10001;
-    }
+  h1 {
+    color: white;
+    margin-bottom: 30px;
+  }
 
-    h1 {
-      font-size: 1.8rem;
-      margin-bottom: 10px;
-      cursor: pointer;
-    }
+  .balloon-container {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 
-    .name {
-      font-weight: 600;
-    }
+  .balloon {
+    width: 80px;
+    height: 100px;
+    background: radial-gradient(circle at 30% 30%, #ff4d6d, #c9184a);
+    border-radius: 50% 50% 45% 45%;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
 
-    p {
-      font-size: 1rem;
-      margin-bottom: 20px;
-      line-height: 1.4;
-    }
+  .balloon:active {
+    transform: scale(0.9);
+  }
 
-    .photos {
-      display: flex;
-      gap: 12px;
-      overflow-x: auto;
-      padding-bottom: 10px;
-      margin-bottom: 25px;
-    }
+  .balloon::after {
+    content: "";
+    position: absolute;
+    width: 2px;
+    height: 40px;
+    background: white;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 
-    .photos img {
-      height: 160px;
-      border-radius: 16px;
-      flex-shrink: 0;
-      user-select: none;
-    }
+  .balloon span {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+  }
 
-    .buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      align-items: center;
-      margin-top: 10px;
-      position: relative;
-      z-index: 10002;
-    }
+  .reveal {
+    margin-top: 30px;
+    display: none;
+    animation: fadeIn 0.5s ease forwards;
+  }
 
-    button {
-      width: 100%;
-      max-width: 220px;
-      padding: 14px;
-      font-size: 1rem;
-      border: none;
-      border-radius: 999px;
-      cursor: pointer;
-      position: relative;
-      z-index: 10003;
-    }
+  .reveal img {
+    width: 220px;
+    border-radius: 16px;
+    margin-bottom: 15px;
+  }
 
-    #yes {
-      background: #ff4d6d;
-      color: white;
-    }
+  .note {
+    color: white;
+    font-size: 1rem;
+    max-width: 280px;
+  }
 
-    #no {
-      background: white;
-      color: #ff4d6d;
-    }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+  }
 
-    /* Floating hearts */
-    .heart {
-      position: fixed;
-      bottom: -20px;
-      font-size: 20px;
-      animation: floatUp linear forwards;
-      pointer-events: none;
-      z-index: 9999;
-    }
-
-    @keyframes floatUp {
-      from {
-        transform: translateY(0) scale(1);
-        opacity: 1;
-      }
-      to {
-        transform: translateY(-100vh) scale(1.6);
-        opacity: 0;
-      }
-    }
-
-    /* Easter egg popup */
-    .popup {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0,0,0,0.75);
-      color: white;
-      padding: 12px 18px;
-      border-radius: 999px;
-      font-size: 0.9rem;
-      z-index: 10005;
-      animation: fadeUp 0.4s ease;
-    }
-
-    @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translate(-50%, 10px);
-      }
-      to {
-        opacity: 1;
-        transform: translate(-50%, 0);
-      }
-    }
-  </style>
+  .final-message {
+    display: none;
+    margin-top: 40px;
+    color: white;
+    font-size: 1.3rem;
+    animation: fadeIn 0.8s ease forwards;
+  }
+</style>
 </head>
 
 <body>
 
-  <div class="card">
-    <h1 id="title">
-      Will you be my Valentine,
-      <span class="name">Beba</span>? 💖
-    </h1>
+<h1>Pop the Balloons 🎈</h1>
 
-    <p>
-      You make my every day better.<br />
-      So… what do you say? 🌹
-    </p>
+<div class="balloon-container" id="balloons">
+  <div class="balloon" data-img="pic1.jpg" data-note="Our first memory together ❤️"><span>1</span></div>
+  <div class="balloon" data-img="pic2.jpg" data-note="Every smile with you feels special 🥹"><span>2</span></div>
+  <div class="balloon" data-img="pic3.jpg" data-note="Late night talks & endless laughter 🌙"><span>3</span></div>
+  <div class="balloon" data-img="pic4.jpg" data-note="And this is why I choose you 💍"><span>4</span></div>
+</div>
 
-    <div class="photos">
-      <img src="pic1.jpg" alt="Us">
-      <img src="pic2.jpg" alt="Us">
-      <img src="pic3.jpg" alt="Us">
-      <img src="pic4.jpg" alt="Us">
-      <img src="pic5.jpg" alt="Us">
+<div class="reveal" id="reveal">
+  <img id="revealImg" src="">
+  <div class="note" id="revealNote"></div>
+</div>
 
-    </div>
+<div class="final-message" id="finalMessage">
+  You popped all the balloons...  
+  So now there’s only one question left ❤️  
+  Will you be mine forever? 💖
+</div>
 
-    <div class="buttons">
-      <button id="yes">YES 💕</button>
-      <button id="no">NO 🙄</button>
-    </div>
-  </div>
+<script>
+  const balloons = document.querySelectorAll(".balloon");
+  const reveal = document.getElementById("reveal");
+  const revealImg = document.getElementById("revealImg");
+  const revealNote = document.getElementById("revealNote");
+  const finalMessage = document.getElementById("finalMessage");
 
-  <script>
-    const noBtn = document.getElementById("no");
-    const yesBtn = document.getElementById("yes");
-    const title = document.getElementById("title");
-    const photos = document.querySelectorAll(".photos img");
+  let remaining = balloons.length;
 
-    /* NO button dodge */
-    function moveNoButton() {
-      const x = Math.random() * 140 - 70;
-      const y = Math.random() * 80 - 40;
-      noBtn.style.transform = `translate(${x}px, ${y}px)`;
-    }
+  balloons.forEach(balloon => {
+    balloon.addEventListener("click", () => {
 
-    noBtn.addEventListener("mouseover", moveNoButton);
-    noBtn.addEventListener("touchstart", (e) => {
-      e.preventDefault();
-      moveNoButton();
-    });
+      // Pop animation
+      balloon.style.transform = "scale(1.5)";
+      balloon.style.opacity = "0";
 
-    /* YES button */
-    let yesClicks = 0;
-    yesBtn.addEventListener("click", () => {
-      yesClicks++;
+      setTimeout(() => {
+        balloon.remove();
+      }, 200);
 
-      if (yesClicks === 1) {
-        document.body.innerHTML = `
-          <div style="
-            min-height:100vh;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            text-align:center;
-            color:white;
-            font-family:Poppins,sans-serif;
-            padding:20px;
-          ">
-            <div>
-              <h1 style="font-size:2.2rem;">YAYYYY 💘</h1>
-              <p style="font-size:1.4rem;">
-                Officially my Valentine 💕<br>
-                I love you endlessly ❤️
-              </p>
-            </div>
-          </div>
-        `;
-      } else {
-        showPopup("PS: I was never giving you a NO option anyway 😌");
+      // Reveal content
+      reveal.style.display = "block";
+      revealImg.src = balloon.getAttribute("data-img");
+      revealNote.textContent = balloon.getAttribute("data-note");
+
+      remaining--;
+
+      if (remaining === 0) {
+        finalMessage.style.display = "block";
       }
     });
-
-    /* Floating hearts */
-    function createHeart() {
-      const heart = document.createElement("div");
-      heart.className = "heart";
-      heart.innerText = "💖";
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.animationDuration = (Math.random() * 2 + 4) + "s";
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 6000);
-    }
-    setInterval(createHeart, 800);
-
-    /* Easter egg: title tap */
-    let heartTaps = 0;
-    title.addEventListener("click", () => {
-      heartTaps++;
-      if (heartTaps === 5) {
-        showPopup("You found my secret. I choose you every single time ❤️");
-        heartTaps = 0;
-      }
-    });
-
-    /* Easter egg: long press on photos */
-    photos.forEach(photo => {
-      let pressTimer;
-      photo.addEventListener("touchstart", () => {
-        pressTimer = setTimeout(() => {
-          showPopup("One of my favourite memories 🥹❤️");
-        }, 800);
-      });
-      photo.addEventListener("touchend", () => {
-        clearTimeout(pressTimer);
-      });
-    });
-
-    /* Popup helper */
-    function showPopup(text) {
-      const popup = document.createElement("div");
-      popup.className = "popup";
-      popup.innerText = text;
-      document.body.appendChild(popup);
-      setTimeout(() => popup.remove(), 2500);
-    }
-  </script>
+  });
+</script>
 
 </body>
 </html>
