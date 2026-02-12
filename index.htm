@@ -9,14 +9,18 @@
 body{
 margin:0;
 font-family:'Poppins',sans-serif;
-text-align:center;
 background:linear-gradient(135deg,#7b4f44,#8c5c52);
 color:white;
-overflow-x:hidden;
+text-align:center;
+overflow:hidden;
+display:flex;
+flex-direction:column;
+align-items:center;
+min-height:100vh;
 }
 
 h1{
-margin-top:30px;
+margin-top:25px;
 font-size:2rem;
 }
 
@@ -24,13 +28,13 @@ font-size:2rem;
 display:flex;
 flex-wrap:wrap;
 justify-content:center;
-gap:40px;
-margin:40px 0;
+gap:35px;
+margin:25px 0;
 }
 
 .balloon{
-width:100px;
-height:130px;
+width:95px;
+height:120px;
 background:radial-gradient(circle at 30% 30%,#ff5c7a,#e60039);
 border-radius:50%;
 position:relative;
@@ -45,19 +49,28 @@ font-weight:bold;
 .balloon::after{
 content:"";
 position:absolute;
-bottom:-40px;
+bottom:-35px;
 left:50%;
 width:4px;
-height:40px;
+height:35px;
 background:white;
 transform:translateX(-50%);
 }
 
+.display-section{
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+flex-grow:1;
+width:100%;
+}
+
 .main-image{
 width:85%;
-max-width:400px;
+max-width:380px;
 border-radius:25px;
-margin-top:20px;
+margin-top:10px;
 display:none;
 }
 
@@ -66,11 +79,12 @@ margin-top:15px;
 font-size:1.2rem;
 color:#ffccd5;
 display:none;
+padding:0 20px;
 }
 
 .final-section{
 display:none;
-margin-top:40px;
+margin-top:30px;
 }
 
 button{
@@ -89,6 +103,7 @@ color:white;
 
 #noBtn{
 background:#ddd;
+position:relative;
 }
 
 .dim{
@@ -108,7 +123,7 @@ z-index:999;
 position:fixed;
 top:-20px;
 font-size:20px;
-animation:fall 3s linear infinite;
+animation:fall linear forwards;
 color:#ff4d6d;
 }
 
@@ -134,6 +149,8 @@ opacity:0;
 <div class="balloon" onclick="popBalloon(6,this)">6</div>
 </div>
 
+<div class="display-section">
+
 <img id="mainImage" class="main-image">
 <div id="messageText" class="message"></div>
 
@@ -144,9 +161,11 @@ opacity:0;
 <button id="noBtn" onmouseover="moveNo()">No 🙈</button>
 </div>
 
+</div>
+
 <div class="dim" id="dim"></div>
 
-<audio id="bgMusic" src="music.mp3" loop></audio>
+<audio id="bgMusic" src="music.mp3"></audio>
 <audio id="popSound" src="pop.mp3"></audio>
 
 <script>
@@ -203,18 +222,23 @@ document.getElementById("finalSection").style.display="block";
 function moveNo(){
 let btn=document.getElementById("noBtn");
 btn.style.position="absolute";
-btn.style.top=Math.random()*70+"vh";
-btn.style.left=Math.random()*70+"vw";
+btn.style.top=Math.random()*60+"vh";
+btn.style.left=Math.random()*60+"vw";
 }
 
 function yesClicked(){
+
+let music=document.getElementById("bgMusic");
+music.volume=1;
+music.play();
+
 startHearts();
 fadeMusic();
 document.getElementById("dim").style.opacity="0.6";
 }
 
 function startHearts(){
-for(let i=0;i<30;i++){
+for(let i=0;i<35;i++){
 let heart=document.createElement("div");
 heart.className="heart";
 heart.innerHTML="❤️";
@@ -229,17 +253,14 @@ let music=document.getElementById("bgMusic");
 let vol=1;
 let fade=setInterval(()=>{
 if(vol>0){
-vol-=0.05;
+vol-=0.03;
 music.volume=vol;
 }else{
 clearInterval(fade);
+music.pause();
 }
 },200);
 }
-
-document.body.addEventListener("click",function(){
-document.getElementById("bgMusic").play();
-},{once:true});
 
 </script>
 
