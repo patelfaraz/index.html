@@ -10,19 +10,21 @@
 
 body {
   margin: 0;
-  min-height: 100vh;
+  height: 100vh;
   background: linear-gradient(135deg, #8e5a5a, #6b4b4b);
   font-family: 'Poppins', sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  overflow: hidden;
   text-align: center;
+  position: relative;
 }
 
 h1 {
   color: white;
-  margin-bottom: 25px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .balloon-container {
@@ -30,7 +32,8 @@ h1 {
   gap: 20px;
   flex-wrap: wrap;
   justify-content: center;
-  margin-bottom: 25px;
+  width: 100%;
+  max-width: 400px;
 }
 
 .balloon {
@@ -64,12 +67,12 @@ h1 {
   font-size: 20px;
 }
 
-/* Reveal section inline */
 .reveal-section {
-  width: 100%;
-  max-width: 340px;
+  position: absolute;
+  bottom: 30px;
+  width: 90%;
+  max-width: 350px;
   display: none;
-  margin-top: 10px;
 }
 
 .reveal-section img {
@@ -80,14 +83,17 @@ h1 {
 .reveal-section p {
   color: #ff4d6d;
   font-weight: 600;
-  margin-top: 15px;
+  margin-top: 12px;
   font-size: 1rem;
+  background: white;
+  padding: 10px;
+  border-radius: 15px;
 }
 
-/* Question */
 .question-box {
   display: none;
-  margin-top: 25px;
+  position: absolute;
+  bottom: 30px;
   color: white;
 }
 
@@ -111,16 +117,32 @@ h1 {
   color: #ff4d6d;
   position: absolute;
 }
+
+/* Heart shower */
+.heart {
+  position: fixed;
+  top: -20px;
+  font-size: 20px;
+  animation: fall linear forwards;
+  pointer-events: none;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh);
+    opacity: 0;
+  }
+}
 </style>
 </head>
 
 <body>
 
-<h1>Pop the Balloons 🎈</h1>
+<h1 id="mainTitle">Pop the Balloons 🎈</h1>
 
 <audio id="popSound" src="pop.mp3"></audio>
 
-<div class="balloon-container">
+<div class="balloon-container" id="balloons">
   <div class="balloon" data-img="pic1.jpg" data-note="You make everyday worth living ❤️"><span>1</span></div>
   <div class="balloon" data-img="pic2.jpg" data-note="Every smile with you feels special 🥹"><span>2</span></div>
   <div class="balloon" data-img="pic3.jpg" data-note="Late night talks & endless laughter 🌙"><span>3</span></div>
@@ -129,7 +151,6 @@ h1 {
   <div class="balloon" data-img="pic6.jpg" data-note="And this is why I choose you. Always. 💍"><span>6</span></div>
 </div>
 
-<!-- Inline Reveal -->
 <div class="reveal-section" id="revealSection">
   <img id="revealImg" src="">
   <p id="revealText"></p>
@@ -149,6 +170,8 @@ const revealText = document.getElementById("revealText");
 const questionBox = document.getElementById("questionBox");
 const popSound = document.getElementById("popSound");
 const noBtn = document.getElementById("noBtn");
+const mainTitle = document.getElementById("mainTitle");
+const balloonContainer = document.getElementById("balloons");
 
 let remaining = balloons.length;
 
@@ -169,6 +192,7 @@ balloons.forEach(balloon => {
     remaining--;
 
     if (remaining === 0) {
+      revealSection.style.display = "none";
       questionBox.style.display = "block";
     }
   });
@@ -176,16 +200,33 @@ balloons.forEach(balloon => {
 
 /* YES button */
 document.getElementById("yesBtn").addEventListener("click", () => {
+
+  // Remove balloons + title
+  balloonContainer.style.display = "none";
   questionBox.innerHTML = "<h2>Forever starts now 💍❤️</h2>";
+  mainTitle.style.display = "none";
+
+  // Heart shower
+  setInterval(() => {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "💖";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (Math.random() * 2 + 3) + "s";
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 5000);
+  }, 200);
 });
 
 /* NO button runs away */
 noBtn.addEventListener("mouseenter", () => {
-  const x = Math.random() * 250 - 125;
-  const y = Math.random() * 150 - 75;
+  const x = Math.random() * 200 - 100;
+  const y = Math.random() * 100 - 50;
   noBtn.style.transform = `translate(${x}px, ${y}px)`;
 });
 </script>
 
 </body>
-</html>
+  </html>
+  
