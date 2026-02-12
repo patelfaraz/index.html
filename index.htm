@@ -3,135 +3,135 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pop the Balloons 💖</title>
+<title>For You ❤️</title>
 
 <style>
-* { box-sizing: border-box; }
-
-body {
-  margin: 0;
-  min-height: 100vh;
-  background: linear-gradient(135deg, #8e5a5a, #6b4b4b);
-  font-family: 'Poppins', sans-serif;
-  text-align: center;
-  color: white;
-  overflow-x: hidden;
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
 }
 
-h1 {
-  margin-top: 20px;
+body{
+  min-height:100vh;
+  background:linear-gradient(135deg,#6d4c41,#8d6e63);
+  text-align:center;
+  color:white;
+  overflow-x:hidden;
+  padding:20px;
+  position:relative;
 }
 
-.balloon-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 25px;
-  margin-top: 30px;
+h1{
+  margin-bottom:30px;
+  font-size:2rem;
 }
 
-.balloon {
-  width: 80px;
-  height: 100px;
-  background: radial-gradient(circle at 30% 30%, #ff4d6d, #c9184a);
-  border-radius: 50% 50% 45% 45%;
-  position: relative;
-  cursor: pointer;
-  transition: 0.2s ease;
+.balloons{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:25px;
+  max-width:500px;
+  margin:0 auto 40px auto;
 }
 
-.balloon::after {
-  content: "";
-  position: absolute;
-  width: 2px;
-  height: 40px;
-  background: white;
-  bottom: -40px;
-  left: 50%;
-  transform: translateX(-50%);
+.balloon{
+  background:radial-gradient(circle at 30% 30%, #ff4d6d, #c9184a);
+  height:140px;
+  border-radius:50%;
+  position:relative;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:28px;
+  font-weight:bold;
+  transition:0.3s;
 }
 
-.balloon span {
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-weight: bold;
-  font-size: 20px;
+.balloon::after{
+  content:"";
+  position:absolute;
+  bottom:-40px;
+  width:3px;
+  height:40px;
+  background:white;
 }
 
-.balloon:active {
-  transform: scale(1.1);
+.balloon:hover{
+  transform:scale(1.05);
 }
 
-/* Reveal Card (Centered, NOT blocking balloons) */
-.reveal-card {
-  margin: 40px auto;
-  width: 90%;
-  max-width: 350px;
-  background: white;
-  color: #ff4d6d;
-  border-radius: 20px;
-  padding: 15px;
-  display: none;
-  animation: fadeIn 0.3s ease;
+.photo-box{
+  display:none;
+  margin:20px auto;
+  max-width:350px;
 }
 
-.reveal-card img {
-  width: 100%;
-  border-radius: 15px;
+.photo-box img{
+  width:100%;
+  border-radius:20px;
 }
 
-.reveal-card p {
-  margin-top: 10px;
-  font-weight: 600;
+.message{
+  margin-top:15px;
+  font-size:1.2rem;
+  color:#ffccd5;
+  font-weight:600;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.9); }
-  to { opacity: 1; transform: scale(1); }
+#finalQuestion{
+  display:none;
+  margin-top:30px;
 }
 
-/* Question */
-.question-box {
-  display: none;
-  margin-top: 40px;
+.buttons{
+  margin-top:20px;
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  position:relative;
 }
 
-.question-box button {
-  margin: 10px;
-  padding: 12px 22px;
-  border-radius: 30px;
-  border: none;
-  font-size: 1rem;
-  cursor: pointer;
+button{
+  padding:12px 25px;
+  border:none;
+  border-radius:30px;
+  font-size:1rem;
+  cursor:pointer;
 }
 
-#yesBtn {
-  background: #ff4d6d;
-  color: white;
+#yesBtn{
+  background:#ff4d6d;
+  color:white;
 }
 
-#noBtn {
-  background: white;
-  color: #ff4d6d;
-  position: relative;
+#noBtn{
+  background:#ddd;
 }
 
-/* Heart Shower */
-.heart {
-  position: fixed;
-  top: -20px;
-  font-size: 20px;
-  animation: fall linear forwards;
-  pointer-events: none;
+.heart{
+  position:fixed;
+  top:-20px;
+  font-size:20px;
+  animation:fall linear forwards;
 }
 
-@keyframes fall {
-  to {
-    transform: translateY(110vh);
-    opacity: 0;
+@keyframes fall{
+  to{
+    transform:translateY(110vh);
+    opacity:0;
   }
+}
+
+#dimOverlay{
+  position:fixed;
+  inset:0;
+  background:black;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 3s ease;
 }
 </style>
 </head>
@@ -140,83 +140,108 @@ h1 {
 
 <h1 id="mainTitle">Pop the Balloons 🎈</h1>
 
+<div class="balloons" id="balloons">
+  <div class="balloon" onclick="popBalloon(1,this)">1</div>
+  <div class="balloon" onclick="popBalloon(2,this)">2</div>
+  <div class="balloon" onclick="popBalloon(3,this)">3</div>
+  <div class="balloon" onclick="popBalloon(4,this)">4</div>
+  <div class="balloon" onclick="popBalloon(5,this)">5</div>
+  <div class="balloon" onclick="popBalloon(6,this)">6</div>
+</div>
+
+<div class="photo-box" id="photoBox">
+  <img id="photo" src="">
+  <div class="message" id="message"></div>
+</div>
+
+<div id="finalQuestion">
+  <h2>Will you be mine forever? ❤️</h2>
+  <div class="buttons">
+    <button id="yesBtn">Yes 💖</button>
+    <button id="noBtn">No 🙈</button>
+  </div>
+</div>
+
+<div id="dimOverlay"></div>
+
 <audio id="popSound" src="pop.mp3"></audio>
-
-<div class="balloon-container" id="balloons">
-  <div class="balloon" data-img="pic1.jpg" data-note="You make everyday worth living ❤️"><span>1</span></div>
-  <div class="balloon" data-img="pic2.jpg" data-note="Every smile with you feels special 🥹"><span>2</span></div>
-  <div class="balloon" data-img="pic3.jpg" data-note="Late night talks & endless laughter 🌙"><span>3</span></div>
-  <div class="balloon" data-img="pic4.jpg" data-note="The way you look at me melts my heart 💕"><span>4</span></div>
-  <div class="balloon" data-img="pic5.jpg" data-note="With you, everything feels right 💖"><span>5</span></div>
-  <div class="balloon" data-img="pic6.jpg" data-note="And this is why I choose you. Always. 💍"><span>6</span></div>
-</div>
-
-<div class="reveal-card" id="revealCard">
-  <img id="revealImg" src="">
-  <p id="revealText"></p>
-</div>
-
-<div class="question-box" id="questionBox">
-  <h2>Will you be mine forever? 💖</h2>
-  <button id="yesBtn">YES 💕</button>
-  <button id="noBtn">NO 🙈</button>
-</div>
+<audio id="bgMusic" src="music.mp3"></audio>
 
 <script>
-const balloons = document.querySelectorAll(".balloon");
-const revealCard = document.getElementById("revealCard");
-const revealImg = document.getElementById("revealImg");
-const revealText = document.getElementById("revealText");
-const questionBox = document.getElementById("questionBox");
-const popSound = document.getElementById("popSound");
 
-let remaining = balloons.length;
+const messages = {
+1:"You make everyday worth living ❤️",
+2:"Every moment with you feels magical ✨",
+3:"You're my safe place 🫶",
+4:"With you, even ordinary days feel extraordinary 💫",
+5:"Falling for you was the best thing that ever happened to me 💖",
+6:"The way you look at me, melts my heart ❤️"
+};
 
-balloons.forEach(balloon => {
-  balloon.addEventListener("click", () => {
+let poppedCount = 0;
 
-    popSound.currentTime = 0;
-    popSound.play();
+function popBalloon(num, element){
+  document.getElementById("popSound").play();
+  element.style.display="none";
 
-    revealImg.src = balloon.dataset.img;
-    revealText.textContent = balloon.dataset.note;
-    revealCard.style.display = "block";
+  document.getElementById("photo").src="pic"+num+".jpg";
+  document.getElementById("message").innerText=messages[num];
+  document.getElementById("photoBox").style.display="block";
 
-    balloon.remove();
-    remaining--;
+  poppedCount++;
 
-    if (remaining === 0) {
-      revealCard.style.display = "none";
-      questionBox.style.display = "block";
-    }
-  });
+  if(poppedCount===6){
+    document.getElementById("finalQuestion").style.display="block";
+  }
+}
+
+const yesBtn=document.getElementById("yesBtn");
+const noBtn=document.getElementById("noBtn");
+const bgMusic=document.getElementById("bgMusic");
+
+noBtn.addEventListener("click",()=>{
+  noBtn.style.position="absolute";
+  noBtn.style.left=Math.random()*200+"px";
+  noBtn.style.top=Math.random()*100+"px";
 });
 
-/* YES button */
-document.getElementById("yesBtn").addEventListener("click", () => {
+yesBtn.addEventListener("click",()=>{
 
-  document.getElementById("balloons").style.display = "none";
-  document.getElementById("mainTitle").style.display = "none";
+  document.getElementById("balloons").style.display="none";
+  document.getElementById("mainTitle").style.display="none";
+  document.getElementById("finalQuestion").style.display="none";
+  document.getElementById("photoBox").style.display="none";
 
-  questionBox.innerHTML = "<h2>Forever starts now 💍❤️</h2>";
+  bgMusic.volume=0.5;
+  bgMusic.play();
 
-  setInterval(() => {
-    const heart = document.createElement("div");
+  const heartInterval=setInterval(()=>{
+    const heart=document.createElement("div");
     heart.classList.add("heart");
-    heart.innerHTML = "💖";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.animationDuration = (Math.random() * 2 + 3) + "s";
+    heart.innerHTML="💖";
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.animationDuration=(Math.random()*2+3)+"s";
     document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 5000);
-  }, 200);
+    setTimeout(()=>heart.remove(),5000);
+  },200);
+
+  setTimeout(()=>clearInterval(heartInterval),8000);
+
+  let fade=setInterval(()=>{
+    if(bgMusic.volume>0.05){
+      bgMusic.volume-=0.05;
+    }else{
+      bgMusic.pause();
+      clearInterval(fade);
+    }
+  },300);
+
+  setTimeout(()=>{
+    document.getElementById("dimOverlay").style.opacity="0.85";
+  },4000);
+
 });
 
-/* NO button runs */
-document.getElementById("noBtn").addEventListener("mouseenter", function() {
-  const x = Math.random() * 200 - 100;
-  const y = Math.random() * 100 - 50;
-  this.style.transform = `translate(${x}px, ${y}px)`;
-});
 </script>
 
 </body>
