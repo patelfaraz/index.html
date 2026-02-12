@@ -6,105 +6,126 @@
 <title>Pop the Balloons 💖</title>
 
 <style>
-  * { box-sizing: border-box; }
+* { box-sizing: border-box; }
 
-  body {
-    margin: 0;
-    min-height: 100vh;
-    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-    font-family: 'Poppins', sans-serif;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    overflow: hidden;
-    text-align: center;
-  }
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  text-align: center;
+}
 
-  h1 { color: white; margin-bottom: 30px; }
+h1 {
+  color: white;
+  margin-bottom: 30px;
+}
 
-  .balloon-container {
-    display: flex;
-    gap: 25px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
+.balloon-container {
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
 
-  .balloon {
-    width: 80px;
-    height: 100px;
-    background: radial-gradient(circle at 30% 30%, #ff4d6d, #c9184a);
-    border-radius: 50% 50% 45% 45%;
-    position: relative;
-    cursor: pointer;
-    transition: transform 0.2s ease, opacity 0.2s ease;
-  }
+.balloon {
+  width: 80px;
+  height: 100px;
+  background: radial-gradient(circle at 30% 30%, #ff4d6d, #c9184a);
+  border-radius: 50% 50% 45% 45%;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
 
-  .balloon::after {
-    content: "";
-    position: absolute;
-    width: 2px;
-    height: 40px;
-    background: white;
-    bottom: -40px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
+.balloon::after {
+  content: "";
+  position: absolute;
+  width: 2px;
+  height: 40px;
+  background: white;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+}
 
-  .balloon span {
-    position: absolute;
-    top: 35%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    font-weight: bold;
-    font-size: 20px;
-  }
+.balloon span {
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+}
 
-  .reveal {
-    margin-top: 30px;
-    display: none;
-    animation: fadeIn 0.5s ease forwards;
-  }
+/* POPUP OVERLAY */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
 
-  .reveal img {
-    width: 220px;
-    border-radius: 16px;
-    margin-bottom: 15px;
-  }
+.popup {
+  background: white;
+  padding: 20px;
+  border-radius: 20px;
+  max-width: 320px;
+  animation: scaleIn 0.3s ease forwards;
+}
 
-  .note { color: white; font-size: 1rem; max-width: 280px; }
+.popup img {
+  width: 100%;
+  border-radius: 15px;
+  margin-bottom: 15px;
+}
 
-  .question-box {
-    display: none;
-    margin-top: 40px;
-    color: white;
-  }
+.popup p {
+  color: #ff4d6d;
+  font-weight: 500;
+}
 
-  .question-box button {
-    margin: 10px;
-    padding: 12px 20px;
-    border-radius: 30px;
-    border: none;
-    cursor: pointer;
-    font-size: 1rem;
-  }
+@keyframes scaleIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
 
-  #yesBtn {
-    background: #ff4d6d;
-    color: white;
-    position: relative;
-  }
+/* QUESTION */
+.question-box {
+  display: none;
+  margin-top: 30px;
+  color: white;
+}
 
-  #noBtn {
-    background: white;
-    color: #ff4d6d;
-  }
+.question-box button {
+  margin: 10px;
+  padding: 12px 20px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  position: relative;
+}
 
-  @keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.9); }
-    to { opacity: 1; transform: scale(1); }
-  }
+#yesBtn {
+  background: #ff4d6d;
+  color: white;
+}
+
+#noBtn {
+  background: white;
+  color: #ff4d6d;
+  position: absolute;
+}
 </style>
 </head>
 
@@ -123,9 +144,12 @@
   <div class="balloon" data-img="pic6.jpg" data-note="And this is why I choose you. Always. 💍"><span>6</span></div>
 </div>
 
-<div class="reveal" id="reveal">
-  <img id="revealImg" src="">
-  <div class="note" id="revealNote"></div>
+<!-- POPUP -->
+<div class="overlay" id="overlay">
+  <div class="popup">
+    <img id="popupImg" src="">
+    <p id="popupNote"></p>
+  </div>
 </div>
 
 <div class="question-box" id="questionBox">
@@ -135,52 +159,57 @@
 </div>
 
 <script>
-  const balloons = document.querySelectorAll(".balloon");
-  const reveal = document.getElementById("reveal");
-  const revealImg = document.getElementById("revealImg");
-  const revealNote = document.getElementById("revealNote");
-  const questionBox = document.getElementById("questionBox");
-  const popSound = document.getElementById("popSound");
+const balloons = document.querySelectorAll(".balloon");
+const overlay = document.getElementById("overlay");
+const popupImg = document.getElementById("popupImg");
+const popupNote = document.getElementById("popupNote");
+const questionBox = document.getElementById("questionBox");
+const popSound = document.getElementById("popSound");
+const noBtn = document.getElementById("noBtn");
 
-  let remaining = balloons.length;
+let remaining = balloons.length;
 
-  balloons.forEach(balloon => {
-    balloon.addEventListener("click", () => {
+balloons.forEach(balloon => {
+  balloon.addEventListener("click", () => {
 
-      popSound.currentTime = 0;
-      popSound.play();
+    popSound.currentTime = 0;
+    popSound.play();
 
-      balloon.style.transform = "scale(1.5)";
-      balloon.style.opacity = "0";
+    balloon.style.transform = "scale(1.5)";
+    balloon.style.opacity = "0";
+    setTimeout(() => balloon.remove(), 200);
 
-      setTimeout(() => balloon.remove(), 200);
+    popupImg.src = balloon.dataset.img;
+    popupNote.textContent = balloon.dataset.note;
 
-      reveal.style.display = "block";
-      revealImg.src = balloon.getAttribute("data-img");
-      revealNote.textContent = balloon.getAttribute("data-note");
+    overlay.style.display = "flex";
 
-      remaining--;
+    remaining--;
 
-      if (remaining === 0) {
+    if (remaining === 0) {
+      setTimeout(() => {
         questionBox.style.display = "block";
-      }
-    });
+      }, 500);
+    }
   });
+});
 
-  // YES button moves
-  const yesBtn = document.getElementById("yesBtn");
-  yesBtn.addEventListener("click", () => {
-    const x = Math.random() * 200 - 100;
-    const y = Math.random() * 100 - 50;
-    yesBtn.style.transform = `translate(${x}px, ${y}px)`;
-  });
+/* Close popup on click */
+overlay.addEventListener("click", () => {
+  overlay.style.display = "none";
+});
 
-  // NO button
-  const noBtn = document.getElementById("noBtn");
-  noBtn.addEventListener("click", () => {
-    questionBox.innerHTML = "<h2>That’s the only right answer 😌❤️</h2>";
-  });
+/* YES BUTTON FINAL RESPONSE */
+document.getElementById("yesBtn").addEventListener("click", () => {
+  questionBox.innerHTML = "<h2>Forever starts now 💍❤️</h2>";
+});
 
+/* NO BUTTON RUNS AWAY */
+noBtn.addEventListener("mouseenter", () => {
+  const x = Math.random() * 250 - 125;
+  const y = Math.random() * 150 - 75;
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+});
 </script>
 
 </body>
