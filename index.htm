@@ -3,175 +3,133 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For You ❤️</title>
+<title>Pop the Balloons ❤️</title>
 
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:'Poppins',sans-serif;
-}
-
 body{
-  min-height:100vh;
-  background:linear-gradient(135deg,#6d4c41,#8d6e63);
-  text-align:center;
-  color:white;
-  overflow-x:hidden;
-  padding:20px;
-  position:relative;
+margin:0;
+font-family:'Poppins',sans-serif;
+background:linear-gradient(135deg,#7a4e4e,#8c6b5c);
+text-align:center;
+color:white;
+overflow-x:hidden;
 }
 
 h1{
-  margin-bottom:30px;
-  font-size:2rem;
+margin-top:30px;
+font-size:2rem;
 }
 
-.balloons{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:25px;
-  max-width:500px;
-  margin:0 auto 40px auto;
+.balloon-container{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:30px;
+margin:30px 0;
 }
 
 .balloon{
-  background:radial-gradient(circle at 30% 30%, #ff4d6d, #c9184a);
-  height:140px;
-  border-radius:50%;
-  position:relative;
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:28px;
-  font-weight:bold;
-  transition:0.3s;
+width:100px;
+height:130px;
+background:radial-gradient(circle at 30% 30%,#ff5c7a,#e91e63);
+border-radius:50%;
+position:relative;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:bold;
+font-size:1.5rem;
 }
 
 .balloon::after{
-  content:"";
-  position:absolute;
-  bottom:-40px;
-  width:3px;
-  height:40px;
-  background:white;
+content:"";
+position:absolute;
+bottom:-40px;
+left:50%;
+width:3px;
+height:40px;
+background:white;
+transform:translateX(-50%);
 }
 
-.balloon:hover{
-  transform:scale(1.05);
-}
-
-.photo-box{
-  display:none;
-  margin:20px auto;
-  max-width:350px;
-}
-
-.photo-box img{
-  width:100%;
-  border-radius:20px;
+.main-image{
+width:90%;
+max-width:400px;
+border-radius:20px;
+margin-top:20px;
 }
 
 .message{
-  margin-top:15px;
-  font-size:1.2rem;
-  color:#ffccd5;
-  font-weight:600;
+margin:20px;
+font-size:1.2rem;
+color:#ffd6df;
+min-height:40px;
 }
 
-#finalQuestion{
-  display:none;
-  margin-top:30px;
-}
-
-.buttons{
-  margin-top:20px;
-  display:flex;
-  justify-content:center;
-  gap:20px;
-  position:relative;
+#finalSection{
+display:none;
+margin-top:20px;
 }
 
 button{
-  padding:12px 25px;
-  border:none;
-  border-radius:30px;
-  font-size:1rem;
-  cursor:pointer;
+padding:12px 25px;
+border:none;
+border-radius:30px;
+font-size:1rem;
+cursor:pointer;
+margin:10px;
 }
 
 #yesBtn{
-  background:#ff4d6d;
-  color:white;
+background:#ff4d6d;
+color:white;
 }
 
 #noBtn{
-  background:#ddd;
-}
-
-.heart{
-  position:fixed;
-  top:-20px;
-  font-size:20px;
-  animation:fall linear forwards;
+background:#e0e0e0;
+color:black;
 }
 
 @keyframes fall{
-  to{
-    transform:translateY(110vh);
-    opacity:0;
-  }
+to{
+transform:translateY(100vh);
+opacity:0;
 }
-
-#dimOverlay{
-  position:fixed;
-  inset:0;
-  background:black;
-  opacity:0;
-  pointer-events:none;
-  transition:opacity 3s ease;
 }
 </style>
 </head>
 
 <body>
 
-<h1 id="mainTitle">Pop the Balloons 🎈</h1>
+<h1 id="title">Pop the Balloons 🎈</h1>
 
-<div class="balloons" id="balloons">
-  <div class="balloon" onclick="popBalloon(1,this)">1</div>
-  <div class="balloon" onclick="popBalloon(2,this)">2</div>
-  <div class="balloon" onclick="popBalloon(3,this)">3</div>
-  <div class="balloon" onclick="popBalloon(4,this)">4</div>
-  <div class="balloon" onclick="popBalloon(5,this)">5</div>
-  <div class="balloon" onclick="popBalloon(6,this)">6</div>
+<div class="balloon-container">
+<div class="balloon" id="balloon1" onclick="popBalloon(1)">1</div>
+<div class="balloon" id="balloon2" onclick="popBalloon(2)">2</div>
+<div class="balloon" id="balloon3" onclick="popBalloon(3)">3</div>
+<div class="balloon" id="balloon4" onclick="popBalloon(4)">4</div>
+<div class="balloon" id="balloon5" onclick="popBalloon(5)">5</div>
+<div class="balloon" id="balloon6" onclick="popBalloon(6)">6</div>
 </div>
 
-<div class="photo-box" id="photoBox">
-  <img id="photo" src="">
-  <div class="message" id="message"></div>
+<img id="mainImage" class="main-image" src="pic1.jpg">
+<p id="messageText" class="message"></p>
+
+<div id="finalSection">
+<h2>Will you be mine forever? ❤️</h2>
+<button id="yesBtn" onclick="moveYes()">Yes 💖</button>
+<button id="noBtn" onclick="sayYes()">No 🙈</button>
 </div>
 
-<div id="finalQuestion">
-  <h2>Will you be mine forever? ❤️</h2>
-  <div class="buttons">
-    <button id="yesBtn">Yes 💖</button>
-    <button id="noBtn">No 🙈</button>
-  </div>
-</div>
-
-<div id="dimOverlay"></div>
-
-<audio id="popSound" src="pop.mp3"></audio>
-<audio id="bgMusic" src="music.mp3"></audio>
+<!-- Background Music -->
+<audio id="bgMusic" src="music.mp3" autoplay loop></audio>
 
 <script>
-let poppedCount = 0;
-const totalBalloons = 6;
+let poppedCount=0;
+const totalBalloons=6;
 
-const messages = {
+const messages={
 1:"You make everyday worth living ❤️",
 2:"Every moment with you feels magical ✨",
 3:"You're my safe place 🫶",
@@ -180,7 +138,7 @@ const messages = {
 6:"The way you look at me, melts my heart ❤️"
 };
 
-const images = {
+const images={
 1:"pic1.jpg",
 2:"pic2.jpg",
 3:"pic3.jpg",
@@ -190,31 +148,30 @@ const images = {
 };
 
 function popBalloon(num){
-const balloon = document.getElementById("balloon"+num);
-if(!balloon) return;
+const balloon=document.getElementById("balloon"+num);
+if(!balloon)return;
 
-balloon.style.visibility = "hidden";
-
-document.getElementById("mainImage").src = images[num];
-document.getElementById("messageText").innerText = messages[num];
+balloon.style.visibility="hidden";
+document.getElementById("mainImage").src=images[num];
+document.getElementById("messageText").innerText=messages[num];
 
 poppedCount++;
 
-if(poppedCount === totalBalloons){
-setTimeout(showFinalQuestion, 800);
+if(poppedCount===totalBalloons){
+setTimeout(showFinalQuestion,800);
 }
 }
 
 function showFinalQuestion(){
-document.getElementById("title").style.display = "none";
-document.getElementById("finalSection").style.display = "block";
+document.getElementById("title").style.display="none";
+document.getElementById("finalSection").style.display="block";
 }
 
 function moveYes(){
-const btn = document.getElementById("yesBtn");
-btn.style.position = "absolute";
-btn.style.left = Math.random()*60 + "%";
-btn.style.top = Math.random()*60 + "%";
+const btn=document.getElementById("yesBtn");
+btn.style.position="absolute";
+btn.style.left=Math.random()*70+"%";
+btn.style.top=Math.random()*70+"%";
 }
 
 function sayYes(){
@@ -223,7 +180,7 @@ fadeMusic();
 }
 
 function startHeartShower(){
-for(let i=0;i<30;i++){
+for(let i=0;i<40;i++){
 const heart=document.createElement("div");
 heart.innerHTML="❤️";
 heart.style.position="fixed";
