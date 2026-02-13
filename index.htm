@@ -12,11 +12,8 @@ font-family:'Poppins',sans-serif;
 background:linear-gradient(135deg,#7b4f44,#8c5c52);
 color:white;
 text-align:center;
-
-/* FIXED */
 overflow-x:hidden;
 overflow-y:auto;
-
 display:flex;
 flex-direction:column;
 align-items:center;
@@ -67,7 +64,7 @@ flex-direction:column;
 align-items:center;
 justify-content:flex-start;
 width:100%;
-padding-bottom:50px;
+padding-bottom:60px;
 }
 
 .main-image{
@@ -139,7 +136,6 @@ opacity:0;
 }
 }
 </style>
-  
 </head>
 
 <body>
@@ -236,39 +232,26 @@ function yesClicked(){
 
 let music=document.getElementById("bgMusic");
 music.volume=1;
-music.play();
+music.play();   // music starts here and keeps playing (no fade)
 
 startHearts();
-fadeMusic();
 document.getElementById("dim").style.opacity="0.6";
 }
 
 function startHearts(){
-for(let i=0;i<35;i++){
+for(let i=0;i<40;i++){
 let heart=document.createElement("div");
 heart.className="heart";
 heart.innerHTML="❤️";
 heart.style.left=Math.random()*100+"vw";
 heart.style.animationDuration=(2+Math.random()*3)+"s";
 document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),5000);
 }
-}
-
-function fadeMusic(){
-let music=document.getElementById("bgMusic");
-let vol=1;
-let fade=setInterval(()=>{
-if(vol>0){
-vol-=0.03;
-music.volume=vol;
-}else{
-clearInterval(fade);
-music.pause();
-}
-},200);
 }
 
 </script>
 
 </body>
-</html>
+  </html>
+  
